@@ -3,23 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#7f9cc4">
+<meta name="theme-color" content="#a0dcf0">
 <title>Lenes ukeplan</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
 :root{--ink:#16223d;--mute:#3f4e70;--ic:#1f4f94;--acc:#b24c6c;--gb:rgba(255,255,255,.6);--sh:rgba(135,70,90,.22);--hi:rgba(255,255,255,.9);--ln:rgba(120,70,90,.14);--base:#dbe6f4;--pill:rgba(255,255,255,.4);--sel:rgba(255,255,255,.72);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
 *,*::before,*::after{box-sizing:inherit}
-html{background-color:#7f9cc4;scroll-padding-top:env(safe-area-inset-top,0px)}
+html{background-color:#a0dcf0;scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;min-height:100%;background:transparent;color:var(--ink);font:400 1rem/1.45 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
-#et,#eb{position:fixed;left:0;right:0;z-index:-1;pointer-events:none}#et{top:0;height:calc(env(safe-area-inset-top,0px) + 2px);background:#7f9cc4}#eb{bottom:0;height:calc(env(safe-area-inset-bottom,0px) + 2px);background:#7f9cc4}
-#bg::before,#bg::after{content:"";position:absolute;left:0;right:0;pointer-events:none}#bg::before{top:0;height:80px;background:linear-gradient(#7f9cc4,rgba(127,156,196,0))}#bg::after{bottom:0;height:190px;background:linear-gradient(rgba(127,156,196,0),#7f9cc4)}
-#bg{position:fixed;inset:0;z-index:-1;pointer-events:none;background:#dbe6f4 url(bg3.jpg) 0% 0%/cover no-repeat}
+#et,#eb{position:fixed;left:0;right:0;z-index:-1;pointer-events:none}#et{top:0;height:calc(env(safe-area-inset-top,0px) + 2px);background:#a0dcf0}#eb{bottom:0;height:calc(env(safe-area-inset-bottom,0px) + 2px);background:#a0dcf0}
+#bg::before,#bg::after{content:"";position:absolute;left:0;right:0;pointer-events:none}#bg::before{top:0;height:80px;background:linear-gradient(#a0dcf0,rgba(160,220,240,0))}#bg::after{bottom:0;height:190px;background:linear-gradient(rgba(160,220,240,0),#a0dcf0)}
+#bg{position:fixed;inset:0;z-index:-1;pointer-events:none;background:#a0dcf0 url(bg4.jpg) 55% 100%/cover no-repeat}
 main{max-width:30rem;margin:0 auto;padding:1.4rem 1rem 3rem}
 h1{font-size:clamp(1.35rem,7vw,2rem);line-height:1.1;letter-spacing:-.03em;font-weight:600;white-space:nowrap;color:#16223d;margin:.5rem .3rem .3rem}
 .sub{margin:0 .3rem 1.2rem;color:#2c3a5a}
 button{font:inherit;color:var(--ink);cursor:pointer}
 button:focus-visible,summary:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-.g{position:relative;overflow:hidden;isolation:isolate;-webkit-backdrop-filter:blur(18px) saturate(1.15) brightness(1.18);backdrop-filter:blur(18px) saturate(1.15) brightness(1.18);background:linear-gradient(155deg,rgba(255,255,255,.42),rgba(255,255,255,.18) 48%,rgba(255,255,255,.34));border:0;border-radius:1.9rem;box-shadow:0 20px 42px rgba(20,50,100,.3),0 2px 4px rgba(20,50,100,.18),inset 0 0 0 1px rgba(255,255,255,.4),inset 3px 4px 8px -2px rgba(255,255,255,.95),inset -3px -4px 8px -2px rgba(170,225,255,.7),inset 0 0 30px rgba(255,255,255,.22);padding:1.1rem 1.2rem;margin-bottom:.8rem}
+.g{position:relative;overflow:hidden;isolation:isolate;-webkit-backdrop-filter:blur(8px) saturate(1.35) brightness(1.1);backdrop-filter:blur(8px) saturate(1.35) brightness(1.1);background:linear-gradient(155deg,rgba(255,255,255,.3),rgba(255,255,255,.08) 48%,rgba(255,255,255,.24));border:0;border-radius:1.9rem;box-shadow:0 20px 42px rgba(20,50,100,.3),0 2px 4px rgba(20,50,100,.18),inset 0 0 0 1px rgba(255,255,255,.4),inset 3px 4px 8px -2px rgba(255,255,255,.95),inset -3px -4px 8px -2px rgba(170,225,255,.7),inset 0 0 30px rgba(255,255,255,.22);padding:1.1rem 1.2rem;margin-bottom:.8rem}
 .g>*{position:relative;z-index:1}
 .g::before{content:"";position:absolute;inset:-16px;z-index:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 62%,rgba(255,255,255,.3)),radial-gradient(70% 60% at var(--hx,15%) var(--hy,5%),rgba(255,255,255,.45),transparent 62%),linear-gradient(rgba(255,255,255,.04),rgba(255,255,255,.04)),linear-gradient(rgba(255,235,243,.14),rgba(255,235,243,.14))}
 .g::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;background:linear-gradient(var(--ang,140deg),rgba(255,255,255,1),rgba(150,230,255,.55) 14%,rgba(255,255,255,.1) 38%,rgba(255,225,150,.4) 70%,rgba(255,255,255,.95));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
@@ -306,23 +306,40 @@ function advice(){
   const nr=Math.round(Tm),gr=Math.abs(nr)===1?" grad":" grader",sub=nr===0?"Rundt null grader":nr<0?"I snitt minus "+(-nr)+gr:"I snitt rundt "+nr+gr;
   const isDay=dy.some(x=>x);
   const icon=th?WS("torden"):snow?WS("snoe"):wet?WS("regn"):fg>=2?WS("taake"):(storm||windy)?I("wind"):clr>=n*.6?WS(isDay?"sol":"maane"):cl>=1?WS("sky"):WS(isDay?"sol-sky":"maane-sky");
-  const S=[];
-  if(th)S.push("Hold deg helst inne hvis det smeller, og ta friminuttet ved vinduet.");
-  if(storm)S.push(pick(["Vinden tar godt i, så ta en vindtett jakke og ei lue som sitter fast.","Det blåser skikkelig. Hold godt i dørene og ta på det vindtette."],dn));
-  else if(windy)S.push("Det blåser friskt, så et vindtett ytterlag er lurt.");
-  if(snow)S.push("Det kommer snø, så ta støvler som tåler vått.");
-  else if(wet)S.push(pick(["Ta regnjakke og vanntette sko.","Regntøyet er dagens beste venn, så ta det med."],dn));
-  if(!(wet&&A>7)){
-    S.push(A<=-8?"Ull nærmest kroppen, vinterjakke, lue, votter og tykke støvler.":A<=-2?"Vinterjakke, lue, votter og støvler, så blir det ålreit.":A<=2?"Ta vinterjakka og gode sko, og gjerne ei lue.":A<=7?"Ta på en varm jakke, og ha lua i lomma.":A<=12?"En vanlig jakke holder, kanskje med en tynn lue.":A<=17?"En lett jakke eller en varm genser holder.":"Lette klær går fint, men ha en jakke til kvelden.");
+  const S=[],P=(a,o)=>pick(a,dn+(o||0)),half=Math.max(1,Math.floor(n/2));
+  const wetH=wc.map(c=>(c>=51&&c<=67)||(c>=71&&c<=77)||(c>=80&&c<=86)),wetNow=wetH.slice(0,2).some(x=>x),wetLater=wetH.slice(2).some(x=>x),wetEnd=wetH.slice(-2).some(x=>x);
+  const dT=n>=4?avg(ap.slice(-half))-avg(ap.slice(0,half)):0;
+  if(th)S.push(P(["Hold deg helst inne hvis det smeller, og ta friminuttet ved vinduet.","Det kan tordne, så vent med utepausen til det har gitt seg."]));
+  if(storm)S.push(P(["Vinden tar godt i, så ta en vindtett jakke og ei lue som sitter fast.","Det blåser skikkelig. Hold godt i dørene og ta på det vindtette.","Sjøen går høyt og vinden er sterk, så hold deg unna kaikanten."]));
+  else if(windy)S.push(wet?P(["Regnet kommer sidelengs, så ta hette på.","Det blåser og regner, så ha et ytterlag som tåler begge deler."]):P(["Det blåser friskt, så et vindtett ytterlag er lurt.","Vinden er med deg i dag, så lua bør sitte godt.","Vindkastene kan bli kjipe, så ha jakka igjen."]));
+  if(snow)S.push(P(["Det kommer snø, så ta støvler som tåler vått.","Det snør, så bruk skoene med god såle.","Snøen kommer utover, så støvler med godt grep er lurt."]));
+  else if(wet){
+    if(mm>=6)S.push(P(["Det øser ned, så regnbukse og vanntette sko gjør dagen enklere.","Mye regn i dag, så ta det tykkeste regntøyet."]));
+    else S.push(P(["Ta regnjakke og vanntette sko.","Regntøyet er dagens beste venn, så ta det med.","Det blir vått, så ha jakka med hette."]));
   }
-  if(variable&&!storm)S.push("Været kan skifte fort, så ha lag på lag.");
-  if(glatt)S.push("Pass opp for glatte flekker.");
-  if(fg>=2)S.push("Det blir tåke, så ta det rolig på veien.");
-  if(dark)S.push("Det er mørkt ute, så husk refleks eller hodelykt.");
+  if(!wet&&!snow&&!wetNow&&wetLater)S.push("Det kommer regn utpå, så ta jakka med selv om det er tørt nå.");
+  else if((wet||snow)&&wetNow&&!wetEnd&&n>=4)S.push("Det letner utpå, så vent gjerne med utepausen.");
+  if(!(wet&&A>7)){
+    S.push(A<=-8?P(["Ull nærmest kroppen, vinterjakke, lue, votter og tykke støvler.","Bitende kaldt, så dekk til ører og fingre.","Ta på alt av ull du har, og lag på lag."],1):A<=-2?P(["Vinterjakke, lue, votter og støvler, så blir det ålreit.","Kaldt nok til votter og skjerf.","Vinterjakka passer fint i dag."],1):A<=2?P(["Ta vinterjakka og gode sko, og gjerne ei lue.","Det er kjølig, så ha lua i veska.","En varm jakke og lukkede sko holder."],1):A<=7?P(["Ta på en varm jakke, og ha lua i lomma.","Friskt nok til en ordentlig jakke.","En tykk genser under jakka er greit."],1):A<=12?P(["En vanlig jakke holder, kanskje med en tynn lue.","Mildt nok til en lettere jakke."],1):A<=17?P(["En lett jakke eller en varm genser holder.","Lunt, så en tynn jakke gjør jobben."],1):P(["Lette klær går fint, men ha en jakke til kvelden.","Skikkelig varmt til Værøy å være, så nyt det."],1));
+  }
+  if(dT>=3&&!late)S.push("Det blir mildere utover, så ha lag du kan ta av.");
+  else if(dT<=-3)S.push(late?"Det blir kaldere utover kvelden.":"Det blir kaldere utover, så ta et ekstra lag til hjemturen.");
+  else if(variable&&!storm)S.push("Været kan skifte fort, så ha lag på lag.");
+  if(glatt)S.push(P(["Pass opp for glatte flekker.","Det kan være isete, så gå forsiktig."],2));
+  if(fg>=2)S.push(P(["Det blir tåke, så ta det rolig på veien.","Tåka ligger tett, så se deg godt for."],3));
+  if(dark&&clr>=n*.6)S.push("Klar himmel, så se opp på vei hjem.");
+  else if(dark)S.push("Det er mørkt ute, så husk refleks eller hodelykt.");
   const ins=wd<5&&!late&&!inFree(T)?nextInsp(wd,nm):null;
   if(ins&&(A<=7||wet||snow||windy))S.push("Du har inspeksjon klokka "+ins+", så ha jakka klar.");
-  if(clr>=n*.6&&A<=2&&!windy&&!dark)S.push("Lyset blir fint, så få med deg litt frisk luft.");
-  S.push(pick(["Husk noe varmt å drikke.","Du fikser dagen fint.","Ta deg tid til en kopp te i friminuttet.","Noe godt i termosen hører med."],dn+1));
+  if(nowH<8||late){
+    const w=late?"kveldsturen":"morgenturen";
+    if(snow)S.push("Aiko blir nok glad for snøen på "+w+".");
+    else if(wet)S.push("Ta regnjakka på før "+w+" med Aiko.");
+    else if(storm)S.push("Hold "+w+" med Aiko kort, for det blåser mye.");
+    else if(A<=-4)S.push("Hold "+w+" med Aiko kort i kulda.");
+  }
+  if(clr>=n*.6&&A<=2&&!windy&&!dark)S.push(P(["Lyset blir fint, så få med deg litt frisk luft.","Klart og kaldt, så ta en liten runde ute i friminuttet."],4));
+  S.push(late?P(["Kos deg i kveld.","Ta det med ro i kveld."],5):P(["Du fikser dagen fint.","Ha en fin dag, Lene.","Ta det rolig mellom øktene."],5));
   return {head,sub,body:S.slice(0,3).join(" "),icon};
 }
 function wrCard(){
