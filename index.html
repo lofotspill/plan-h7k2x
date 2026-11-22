@@ -115,6 +115,13 @@ ul.l li:first-child{border-top:0}
 .cd{display:flex;align-items:center;gap:.9rem}
 .cd .n{font-size:2.4rem;font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--ic)}
 .cd .t{font-weight:600}
+.pk{list-style:none;margin:0 0 .4rem;padding:0}
+.pk li{display:flex;gap:.7rem;padding:.45rem 0;border-top:1px solid var(--ln);line-height:1.3}
+.pk li:first-child{border-top:0}
+.pk .w{flex:none;width:6.4rem;color:var(--ic);font-weight:700;font-size:.82rem}
+.pk .w small{display:block;color:var(--mute);font-weight:500;font-size:.78rem}
+.pk .t{flex:1;min-width:0;font-size:.92rem}
+.hk-h{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin:.2rem 0 .3rem}
 .hk{list-style:none;margin:0;padding:0}
 .hk li{display:flex;align-items:center;gap:.6rem;padding:.55rem 0;border-top:1px solid var(--ln)}
 .hk li:first-child{border-top:0}
@@ -398,8 +405,25 @@ function cdCard(){
 let HK=[];try{HK=JSON.parse(localStorage.getItem("hk1")||"[]")}catch(e){}
 const hkSave=()=>{try{localStorage.setItem("hk1",JSON.stringify(HK))}catch(e){}};
 const esc=t=>t.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PK=[
+ {d:"2026-11-30",t:"10:15-11:00",x:"Time med elevrådet"},
+ {d:"2026-12-01",t:"09:15",x:"Helikopter Værøy til Bodø (sjekk tiden)"},
+ {d:"2026-12-01",t:"",x:"Kurs"},
+ {d:"2026-12-03",t:"14:30",x:"Omstillingsmøte"},
+ {d:"2026-12-03",t:"16:30",x:"Helikopter hjem fra Bodø (sjekk tiden)"},
+ {d:"2026-12-07",t:"17:15",x:"Helikopter til Bodø, reise til OO25 (sjekk tiden)"},
+ {d:"2026-12-08",t:"",x:"OO25-møte"},
+ {d:"2026-12-08",t:"16:30",x:"Helikopter hjem fra Bodø (sjekk tiden)"}
+];
+const MN=["jan","feb","mar","apr","mai","jun","jul","aug","sep","okt","nov","des"],WDN=["søn","man","tir","ons","tor","fre","lør"];
+function pkList(){const td=dstr(new Date());return PK.filter(x=>x.d>=td).sort((a,b)=>a.d===b.d?(a.t||"00").localeCompare(b.t||"00"):a.d<b.d?-1:1)}
+function pkHTML(){
+  const L=pkList();if(!L.length)return "";
+  const T=new Date(),t0=new Date(T.getFullYear(),T.getMonth(),T.getDate());
+  return `<div class="hk-h">Kommer</div><ul class="pk">${L.map(x=>{const d=new Date(x.d+"T12:00"),k=Math.round((d-t0)/864e5),w=k===0?"I dag":k===1?"I morgen":WDN[d.getDay()]+" "+d.getDate()+". "+MN[d.getMonth()];return `<li><span class="w">${w}${x.t?`<small>${x.t}</small>`:""}</span><span class="t">${esc(x.x)}</span></li>`}).join("")}</ul>`+(HK.length?`<div class="hk-h">Mine</div>`:"");
+}
 function hkHTML(){
-  return `<ul class="hk">${HK.map((x,i)=>`<li><label><input type="checkbox" data-hk="${i}"${x.d?" checked":""}><span${x.d?' class="dn"':""}>${esc(x.t)}</span></label><button type="button" class="x" data-hd="${i}" aria-label="Fjern">×</button></li>`).join("")}</ul><form class="hf" id="hkf"><input id="hki" type="text" placeholder="Ny huskelapp …" autocomplete="off" enterkeyhint="done"><button type="submit">Legg til</button></form>`;
+  return pkHTML()+`<ul class="hk">${HK.map((x,i)=>`<li><label><input type="checkbox" data-hk="${i}"${x.d?" checked":""}><span${x.d?' class="dn"':""}>${esc(x.t)}</span></label><button type="button" class="x" data-hd="${i}" aria-label="Fjern">×</button></li>`).join("")}</ul><form class="hf" id="hkf"><input id="hki" type="text" placeholder="Ny huskelapp …" autocomplete="off" enterkeyhint="done"><button type="submit">Legg til</button></form>`;
 }
 function render(){
   if(document.activeElement&&document.activeElement.id==="hki")return;
@@ -408,7 +432,7 @@ function render(){
   const w=WI[tod]<0?null:WO[WI[tod]];
   let h=jobTile()+(jobIsOpen()?`<section class="g tpc">${tpHTML()}</section>`:"")+wrCard()+`<div class="tiles">${moonTile()}${nextTile()}</div>`+cdCard();
   h+=det("trening","Trening",w?w[0]:"Hviledag",w?ul(w[1]):'<p class="lb">Ingen økt i dag.</p>');
-  const hn=HK.filter(x=>!x.d).length;
+  const hn=HK.filter(x=>!x.d).length+pkList().length;
   h+=det("husk","Huskeliste",hn?hn+" igjen":"Ingenting å huske",hkHTML());
   document.getElementById("v").innerHTML=h;
   op.forEach(i=>{const d=document.getElementById(i);if(d)d.open=true});
