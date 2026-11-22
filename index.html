@@ -10,7 +10,7 @@
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;min-height:100%;background:var(--base);color:var(--ink);font:400 1rem/1.45 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
-#bg{position:fixed;inset:0;z-index:-1;pointer-events:none}#bg svg{width:100%;height:100%;display:block}
+#bg{position:fixed;inset:0;z-index:-1;pointer-events:none;background:#c4ecf6 url(bg.jpg) 50% 100%/cover no-repeat}
 main{max-width:30rem;margin:0 auto;padding:1.4rem 1rem 3rem}
 h1{font-size:clamp(1.35rem,7vw,2rem);line-height:1.1;letter-spacing:-.03em;font-weight:600;white-space:nowrap;color:#4a3340;margin:.5rem .3rem .3rem}
 .sub{margin:0 .3rem 1.2rem;color:var(--mute)}
@@ -128,22 +128,7 @@ ul.l li:first-child{border-top:0}
 </style>
 </head>
 <body>
-<div id="bg" aria-hidden="true"><svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ec3dc"/><stop offset=".55" stop-color="#cfe2ec"/><stop offset="1" stop-color="#eaf1ee"/></linearGradient>
-<symbol id="pn" viewBox="0 0 40 100" preserveAspectRatio="none"><path d="M20 0 L33 34 H26 L38 62 H27 L40 92 H22 V100 H18 V92 H0 L13 62 H2 L14 34 H7 Z"/></symbol>
-</defs>
-<rect width="400" height="800" fill="url(#sk)"/>
-<circle cx="300" cy="150" r="46" fill="#fff" opacity=".55"/>
-<path d="M0 420 L70 330 L120 380 L190 270 L260 370 L310 320 L400 410 V800 H0Z" fill="#b4c9da"/>
-<path d="M0 500 L60 440 L130 490 L210 390 L290 480 L350 430 L400 480 V800 H0Z" fill="#8fadc4"/>
-<path d="M0 580 L90 520 L170 575 L250 505 L340 570 L400 540 V800 H0Z" fill="#7596b0"/>
-<rect y="640" width="400" height="160" fill="#6f8f86"/>
-<use href="#pn" x="-26.6" y="560.0" width="33.2" height="79.0" fill="#6f8f86"/><use href="#pn" x="0.7" y="567.0" width="30.7" height="73.0" fill="#6f8f86"/><use href="#pn" x="20.2" y="531.0" width="43.7" height="104.0" fill="#6f8f86"/><use href="#pn" x="48.5" y="542.0" width="39.1" height="93.0" fill="#6f8f86"/><use href="#pn" x="78.7" y="570.0" width="30.7" height="73.0" fill="#6f8f86"/><use href="#pn" x="102.6" y="559.0" width="34.9" height="83.0" fill="#6f8f86"/><use href="#pn" x="130.2" y="559.0" width="31.5" height="75.0" fill="#6f8f86"/><use href="#pn" x="151.8" y="544.0" width="40.3" height="96.0" fill="#6f8f86"/><use href="#pn" x="180.2" y="550.0" width="35.7" height="85.0" fill="#6f8f86"/><use href="#pn" x="201.9" y="530.0" width="44.1" height="105.0" fill="#6f8f86"/><use href="#pn" x="234.7" y="567.0" width="30.7" height="73.0" fill="#6f8f86"/><use href="#pn" x="259.8" y="566.0" width="32.3" height="77.0" fill="#6f8f86"/><use href="#pn" x="278.9" y="527.0" width="46.2" height="110.0" fill="#6f8f86"/><use href="#pn" x="305.5" y="537.0" width="44.9" height="107.0" fill="#6f8f86"/><use href="#pn" x="331.7" y="528.0" width="44.5" height="106.0" fill="#6f8f86"/><use href="#pn" x="360.1" y="548.0" width="39.9" height="95.0" fill="#6f8f86"/><use href="#pn" x="388.4" y="550.0" width="35.3" height="84.0" fill="#6f8f86"/>
-<rect y="700" width="400" height="100" fill="#4f7a6c"/>
-<use href="#pn" x="-35.5" y="548.0" width="60.9" height="145.0" fill="#4f7a6c"/><use href="#pn" x="6.1" y="568.0" width="53.8" height="128.0" fill="#4f7a6c"/><use href="#pn" x="46.0" y="586.0" width="50.0" height="119.0" fill="#4f7a6c"/><use href="#pn" x="78.3" y="549.0" width="61.3" height="146.0" fill="#4f7a6c"/><use href="#pn" x="116.5" y="556.0" width="60.9" height="145.0" fill="#4f7a6c"/><use href="#pn" x="160.6" y="581.0" width="48.7" height="116.0" fill="#4f7a6c"/><use href="#pn" x="195.1" y="565.0" width="55.9" height="133.0" fill="#4f7a6c"/><use href="#pn" x="230.6" y="550.0" width="60.9" height="145.0" fill="#4f7a6c"/><use href="#pn" x="268.3" y="548.0" width="61.3" height="146.0" fill="#4f7a6c"/><use href="#pn" x="305.7" y="544.0" width="62.6" height="149.0" fill="#4f7a6c"/><use href="#pn" x="345.4" y="557.0" width="59.2" height="141.0" fill="#4f7a6c"/><use href="#pn" x="379.6" y="546.0" width="66.8" height="159.0" fill="#4f7a6c"/>
-<use href="#pn" x="-38.3" y="570.0" width="96.6" height="230.0" fill="#2f5a4d"/><use href="#pn" x="17.7" y="551.0" width="104.6" height="249.0" fill="#2f5a4d"/><use href="#pn" x="277.9" y="552.0" width="104.2" height="248.0" fill="#2f5a4d"/><use href="#pn" x="335.4" y="564.0" width="99.1" height="236.0" fill="#2f5a4d"/>
-</svg></div>
+<div id="bg" aria-hidden="true"></div>
 <main>
 <h1 id="hi"></h1>
 <p class="sub" id="dt"></p>
