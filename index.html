@@ -18,11 +18,7 @@ button:focus-visible,summary:focus-visible{outline:2px solid var(--acc);outline-
 .g{position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(150deg,rgba(255,255,255,.5),rgba(255,255,255,.18));border:0;border-radius:1.7rem;box-shadow:0 12px 32px var(--sh),0 1px 2px rgba(110,60,70,.18);padding:1.1rem 1.2rem;margin-bottom:.8rem}
 .g>*{position:relative;z-index:1}
 .g::before{content:"";position:absolute;inset:-16px;z-index:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 62%,rgba(255,255,255,.3)),radial-gradient(70% 60% at var(--hx,15%) var(--hy,5%),rgba(255,255,255,.45),transparent 62%),linear-gradient(rgba(255,255,255,.04),rgba(255,255,255,.04)),linear-gradient(rgba(255,240,246,.22),rgba(255,240,246,.22))}
-.g::after,.days button::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;background:linear-gradient(var(--ang,140deg),rgba(255,255,255,.98),rgba(255,255,255,.12) 32%,rgba(255,255,255,.1) 68%,rgba(255,255,255,.85));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
-.days{display:flex;gap:.3rem;margin-bottom:.9rem}
-.days button{position:relative;flex:1;min-width:0;padding:.55rem 0;font-size:.82rem;font-weight:600;border:0;border-radius:2rem;background:linear-gradient(150deg,rgba(255,255,255,.6),rgba(255,255,255,.25));box-shadow:0 6px 16px var(--sh),inset 0 1.5px 1px rgba(255,255,255,.9),inset 0 0 12px rgba(255,255,255,.25)}
-.days button[aria-pressed="true"]{background:var(--sel);box-shadow:0 4px 12px var(--sh),inset 0 1px 0 var(--hi)}
-.days button.today::after{content:"";display:inline-block;width:.32rem;height:.32rem;border-radius:50%;background:var(--acc);margin-left:.25rem;vertical-align:middle}
+.g::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;background:linear-gradient(var(--ang,140deg),rgba(255,255,255,.98),rgba(255,255,255,.12) 32%,rgba(255,255,255,.1) 68%,rgba(255,255,255,.85));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
 .wx-h{display:flex;justify-content:space-between;align-items:center;gap:1rem}
 .wx-t{font-size:2.8rem;line-height:1;letter-spacing:-.04em;font-weight:700;margin:.2rem 0 .2rem -.032em}
 .wx-d{color:var(--mute)}
@@ -98,23 +94,38 @@ ul.l li:first-child{border-top:0}
 .tp td.on{color:var(--acc);font-weight:700;background:#fff;box-shadow:inset 0 0 0 1.5px var(--acc)}
 .tp td.lab.on{background:none;box-shadow:none}
 .tp td.lab.on b,.tp td.lab.on .ty,.tp td.lab.on .tt{color:var(--acc)}
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.g,.days button{background:var(--base)}}
-@media(prefers-reduced-transparency:reduce){.g::before{display:none}.g,.days button{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--base)}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.g{background:var(--base)}}
+@media(prefers-reduced-transparency:reduce){.g::before{display:none}.g{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--base)}}
 @media(prefers-reduced-motion:no-preference){button{transition:transform .25s cubic-bezier(.34,1.56,.64,1)}button:active{transform:scale(.96)}}
+
+.tiles{margin-bottom:.8rem}
+.tiles .g{margin:0;aspect-ratio:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:.9rem}
+.sq b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:1.1rem;line-height:1.2;font-weight:700;letter-spacing:-.02em;margin:.15rem 0}
+.sq small{display:block;color:var(--mute);font-size:.8rem;line-height:1.35}
+.sq .lb{margin-bottom:.2rem}
+.moon{display:block;width:4rem;height:4rem;margin:.1rem auto .3rem}
+.wr-t{font-size:1.45rem;line-height:1.15;letter-spacing:-.03em;font-weight:700;margin:.15rem 0 .1rem}
+.wr-s{color:var(--mute);font-size:.9rem}
+.wr-b{margin:.8rem 0 0;line-height:1.5}
+.g.wr .wx-i svg{width:3.6rem;height:3.6rem}
+.cd{display:flex;align-items:center;gap:.9rem}
+.cd .n{font-size:2.4rem;font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--acc)}
+.cd .t{font-weight:600}
+.tp td.e.on{background:#fff}
+.tp tr.l td.e.on::after{content:"ledig";font-size:.58rem;font-weight:500;color:var(--mute)}
 </style>
 </head>
 <body>
 <main>
 <h1 id="hi"></h1>
 <p class="sub" id="dt"></p>
-<div class="days" id="days" role="group" aria-label="Velg dag"></div>
 <div id="v"></div>
 </main>
 <script>
 let tk=0,LX=.3,LY=.12;
 function light(){
   const vw=innerWidth,vh=innerHeight;
-  document.querySelectorAll(".g,.days button").forEach(e=>{const r=e.getBoundingClientRect();
+  document.querySelectorAll(".g").forEach(e=>{const r=e.getBoundingClientRect();
     e.style.setProperty("--hx",((LX*vw-r.left)/r.width*100).toFixed(1)+"%");
     e.style.setProperty("--hy",((LY*vh-r.top)/r.height*100).toFixed(1)+"%");
     const a=Math.atan2(LY*vh-(r.top+r.height/2),LX*vw-(r.left+r.width/2))*180/Math.PI+90;
@@ -126,7 +137,6 @@ addEventListener("resize",tick);
 document.addEventListener("toggle",tick,true);
 const DN=["Mandag","Tirsdag","Onsdag","Torsdag","Fredag","Lørdag","Søndag"];
 const MID=["Ovnsbakte kyllinglår, kål og 2 poteter","Omelett med grønnsaker og ost","Kyllinglår (rester), kål og 2 poteter","Kjøttdeig-kålpanne (lag dobbel porsjon)","Taco-salat med kjøttdeigen fra torsdag","Burger uten brød i salatblad, kål eller frosne grønnsaker","Ovnsbakte kyllinglår, kål og 2 poteter"];
-const LU=["Grovt knekkebrød med ost og salami, agurk og kokt egg eller kesam","Eggerøre med ost og tomat","Kokte egg, kesam og agurk"];
 const WO=[
 ["Underkropp",["Goblet-knebøy til stol med kettlebell (8 kg), senk deg sakte, 3×10–12","Rumensk markløft med kettlebell, 2×10–12","Utfall bakover med støtte, kettlebell i én hånd, 2×8 per side","Hoftehev på matta med kettlebell på hoftene, 2×12–15","Sidesteg med strikk rundt anklene eller lårene, 2×12 per side","Tåhev på et trappetrinn, 2×15","Rulle ut spente muskler, ca. 5 min"]],
 ["Fysio",["Ryggsenk på alle fire, senk ryggen ned med armene rett frem, 12×3","Strikk festet på et håndtak, dra til deg med armene i 90 grader inntil kroppen, 12×3","Strikk, armene i 90 grader inntil kroppen, vri én arm ut fra kroppen med albuen inn mot deg mens den andre hånden holder igjen, 12×3 per arm","Strikk, armene i 90 grader med hendene opp mot taket, strekk strikken mens du løfter opp og ned til startposisjon"]],
@@ -134,7 +144,6 @@ const WO=[
 ["Hele kroppen",["Rumensk markløft med kettlebell, 2×10","Utfall med støtte, 2×8 per side","Strikk-nedtrekk, 2×10–12","Armhevinger mot kjøkkenbenk eller vegg, 2×8–12","Dead bug på matta, 2×8 per side","Rolig gange 10 min, gjerne som en tur med Aiko","Rulle ut spente muskler, ca. 5 min"]]
 ];
 const WI=[0,1,2,1,3,1,-1];
-const SHOP=[["Kjøtt og egg",["Kjøttdeig","Kyllinglår","Egg","Salami eller skinke"]],["Meieri",["Gresk yoghurt","Kesam","Ost"]],["Grønnsaker",["Hvitkål eller spisskål","Poteter","Løk","Salat","Tomat","Agurk","Paprika","Frosne grønnsaker (brokkoli og blomkål)"]],["Ellers",["Taco-krydder","Majones","Grovt knekkebrød","Frosne blåbær","Nøtter og salte peanøtter"]],["Har fra før",["Tahini","Mandelsmør","Presset og tørket kokosnøtt"]]];
 const SK=["15:10","14:10","15:30","","14:10"],TT=["16:00","","16:00","","16:00"],TRN=["Underkropp","","Overkropp","","Hele kroppen"];
 const mn=t=>+t.slice(0,2)*60+ +t.slice(3);
 const ad=(t,m)=>{const x=mn(t)+m;return String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0")};
@@ -177,55 +186,6 @@ const TP=[
 ["13:25","14:10","6","l",["Lesetime 8/9","Norsk 10","Planmøte","",""]],
 ["14:10","15:30","7","l",["Teammøte","","","",""]]
 ];
-function jobState(){
-  const T=new Date(),wd=(T.getDay()+6)%7,nm=T.getHours()*60+T.getMinutes(),s={wd:wd,row:-1,vv:false};
-  if(wd>4)return s;
-  s.vv=wd===3&&nm>=mn("08:30")&&nm<mn("15:30");
-  TP.forEach((r,k)=>{if(mn(r[0])<=nm&&nm<mn(r[1]))s.row=k});
-  return s;
-}
-function jobStat(){
-  const s=jobState();
-  if(s.wd>4)return null;
-  if(s.vv)return ["Verv UDF","Frikjøpt til vervet"];
-  if(s.row<0)return null;
-  const r=TP[s.row],c=r[4][s.wd],t=r[0]+"–"+r[1];
-  if(s.wd===2&&s.row>=10)return ["Planmøte","13:25–15:30"];
-  if(r[3]==="b"){const n=r[2]==="SPI"?"Spisepause":"Friminutt";return c?["Inspeksjon "+c,n+" "+t]:[n,t]}
-  return c?[c,"Time "+r[2]+" · "+t]:["Ledig time","Time "+r[2]+" · "+t];
-}
-let jobManual=null,lastAuto=null;
-function workEnd(wd){if(wd===2||wd===3)return TP[TP.length-1][1];for(let k=TP.length-1;k>=0;k--)if(TP[k][4][wd])return TP[k][1];return"15:30"}
-function workNow(){const T=new Date(),wd=(T.getDay()+6)%7,nm=T.getHours()*60+T.getMinutes();return wd!==3&&wd<5&&nm>=480&&nm<mn(workEnd(wd))}
-function jobIsOpen(){const a=workNow();if(a!==lastAuto){lastAuto=a;jobManual=null}return jobManual===null?a:jobManual}
-function jobTile(){
-  const st=jobStat();
-  return `<button class="g tile job${st?" live":""}" data-sheet="1" type="button" aria-expanded="${jobIsOpen()}"><span class="ic">${I("heart")}</span><span class="tx"><span class="lb">Arbeid</span><br><b>${st?st[0]:"Timeplan"}</b>${st?`<small>${st[1]}</small>`:""}</span><i class="ch"></i></button>`;
-}
-function tpHTML(){
-  const s=jobState();
-  let h=`<table class="tp" aria-label="Timeplan for uka"><thead><tr><th class="t"></th>${TD.map((n,i)=>`<th${i===s.wd?' class="today"':""}>${n}</th>`).join("")}</tr></thead><tbody>`;
-  TP.forEach((r,k)=>{
-    const b=r[3]==="b",cur=k===s.row,tm=r[0]+"–"+r[1];
-    h+=`<tr class="${b?"b":"l"}"><td class="lab${cur?" on":""}"${cur?' aria-current="time"':""}>${b?`<span class="ty">${r[2]}</span>`:`<b>${r[2]}</b>`}<span class="tt">${tm}</span></td>`;
-    for(let d=0;d<5;d++){
-      if(d===3){if(k===0)h+=`<td class="v${s.vv?" on":""}"${s.vv?' aria-current="time"':""} rowspan="${TP.length}">Verv<br>UDF</td>`;continue}
-      if(d===2&&k===11)continue;
-      const c=r[4][d],pm=d===2&&k===10,act=s.wd===d&&(pm?(s.row===10||s.row===11):(!!c&&cur)),cl=[];
-      if(!c)cl.push("e");else if(b)cl.push("k");
-      if(act)cl.push("on");
-      h+=`<td${cl.length?` class="${cl.join(" ")}"`:""}${pm?' rowspan="2"':""}${act?' aria-current="time"':""}>${c}</td>`;
-    }
-    h+="</tr>";
-  });
-  return h+"</tbody></table>";
-}
-const det=(id,t,s,b)=>`<details class="g" id="${id}"><summary><span>${t}${s?`<small>${s}</small>`:""}</span></summary>${b}</details>`;
-const ul=a=>`<ul class="l">${a.map(x=>`<li>${x}</li>`).join("")}</ul>`;
-const PLACE="Værøy",LAT=67.6597,LON=12.6847;
-const WURL="https://api.open-meteo.com/v1/forecast?latitude="+LAT+"&longitude="+LON+"&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_gusts_10m,precipitation,is_day,cloud_cover&hourly=temperature_2m,weather_code,precipitation_probability,is_day&daily=sunrise,sunset&timezone=Europe%2FOslo&wind_speed_unit=ms&forecast_days=2";
-let WX=null,WXat=0,WXerr=false;
-try{const c=JSON.parse(localStorage.getItem("wx3")||"null");if(c&&Date.now()-c.at<3*3600e3){WX=c.d;WXat=c.at}}catch(e){}
 const p2=n=>String(n).padStart(2,"0");
 const WP={"sol": "<circle cx=\"12\" cy=\"12\" r=\"4.2\"/><path d=\"M12.00 5.00L12.00 2.50M16.95 7.05L18.72 5.28M19.00 12.00L21.50 12.00M16.95 16.95L18.72 18.72M12.00 19.00L12.00 21.50M7.05 16.95L5.28 18.72M5.00 12.00L2.50 12.00M7.05 7.05L5.28 5.28\"/>", "maane": "<path d=\"M20.53 14.47A8.5 8.5 0 1 1 9.53 3.47A7.78 7.78 0 0 0 20.53 14.47z\"/>", "sol-sky": "<path d=\"M5.99 11.31A3.8 3.8 0 0 1 10.70 5.60\"/><path d=\"M9.00 3.20L9.00 1.60M4.90 13.10L3.77 14.23M3.20 9.00L1.60 9.00M4.90 4.90L3.77 3.77\"/><path d=\"M10.15 17.30A3.30 3.30 0 0 1 9.82 10.70A4.41 4.41 0 0 1 18.62 10.04A3.63 3.63 0 0 1 18.40 17.30z\"/>", "maane-sky": "<path d=\"M4.65 1.54L4.81 1.50L4.96 1.47L5.12 1.45L5.28 1.43L5.44 1.41L5.59 1.40L5.75 1.40L5.91 1.40L6.07 1.41L6.23 1.42L6.39 1.44L6.54 1.46L6.70 1.49L6.86 1.52L7.01 1.56L7.16 1.60L7.31 1.65L7.46 1.70L7.61 1.76L7.76 1.82L7.90 1.89L8.04 1.96L8.18 2.04L8.32 2.12L8.45 2.20L8.58 2.29L8.71 2.39L8.84 2.49L8.96 2.59L9.08 2.69L9.19 2.81L9.30 2.92L9.41 3.04L9.51 3.16L9.61 3.28L9.70 3.41L9.79 3.54L9.88 3.68L9.96 3.81L10.04 3.95L10.11 4.09L10.18 4.24L10.24 4.38L10.30 4.53L10.35 4.68L10.40 4.83L10.44 4.98L10.48 5.14L10.51 5.29L10.54 5.45L10.56 5.61M6.14 10.99L5.98 11.00L5.82 11.00L5.67 11.00L5.51 10.99L5.35 10.98L5.19 10.96L5.03 10.94L4.88 10.91L4.72 10.88L4.57 10.84L4.41 10.80L4.26 10.75L4.11 10.69L3.97 10.64L3.82 10.57L3.68 10.51L3.53 10.43L3.40 10.36L3.26 10.27L3.13 10.19L3.35 10.22L3.58 10.23L3.80 10.24L4.03 10.23L4.26 10.22L4.48 10.19L4.70 10.14L4.93 10.09L5.14 10.03L5.36 9.95L5.57 9.87L5.77 9.77L5.97 9.66L6.17 9.55L6.35 9.42L6.53 9.28L6.71 9.14L6.87 8.98L7.03 8.82L7.18 8.65L7.32 8.47L7.45 8.28L7.57 8.09L7.68 7.89L7.78 7.69L7.87 7.48L7.95 7.27L8.02 7.05L8.08 6.83L8.12 6.61L8.16 6.39L8.18 6.16L8.19 5.93L8.19 5.71L8.17 5.48L8.15 5.25L8.11 5.03L8.06 4.81L8.00 4.59L7.93 4.37L7.85 4.16L7.76 3.95L7.66 3.75L7.54 3.56L7.42 3.37L7.29 3.18L7.15 3.01L6.99 2.84L6.84 2.67L6.67 2.52L6.49 2.38L6.31 2.24L6.12 2.12L5.92 2.00L5.72 1.90L5.52 1.80L5.31 1.72L5.09 1.65L4.87 1.59L4.65 1.54\"/><path d=\"M10.15 17.30A3.30 3.30 0 0 1 9.82 10.70A4.41 4.41 0 0 1 18.62 10.04A3.63 3.63 0 0 1 18.40 17.30z\"/>", "sky": "<path d=\"M6.60 18.90A3.91 3.91 0 0 1 6.12 11.10A5.76 5.76 0 0 1 17.64 10.62A4.14 4.14 0 0 1 17.40 18.90z\"/>", "taake": "<path d=\"M7.50 15.50A3.26 3.26 0 0 1 7.10 9.00A4.80 4.80 0 0 1 16.70 8.60A3.45 3.45 0 0 1 16.50 15.50z\"/><path d=\"M5 18.5h14M8 21.5h8\"/>", "yr": "<path d=\"M7.50 15.50A3.26 3.26 0 0 1 7.10 9.00A4.80 4.80 0 0 1 16.70 8.60A3.45 3.45 0 0 1 16.50 15.50z\"/><path d=\"M10.5 18.3 9.5 21M14.5 18.3 13.5 21\"/>", "regn": "<path d=\"M7.50 15.50A3.26 3.26 0 0 1 7.10 9.00A4.80 4.80 0 0 1 16.70 8.60A3.45 3.45 0 0 1 16.50 15.50z\"/><path d=\"M8.5 18.3 7.5 21M12.5 18.3 11.5 21M16.5 18.3 15.5 21\"/>", "snoe": "<path d=\"M7.50 15.50A3.26 3.26 0 0 1 7.10 9.00A4.80 4.80 0 0 1 16.70 8.60A3.45 3.45 0 0 1 16.50 15.50z\"/><path stroke-width=\"1.2\" d=\"M6.2 19.2h2.6M7.5 17.9v2.6M10.7 21.5h2.6M12 20.2v2.6M15.2 19.2h2.6M16.5 17.9v2.6\"/>", "torden": "<path d=\"M7.50 15.50A3.26 3.26 0 0 1 7.10 9.00A4.80 4.80 0 0 1 16.70 8.60A3.45 3.45 0 0 1 16.50 15.50z\"/><path d=\"M14.2 15.4 10.8 19H14.6L11.2 23\"/>"};
 const WS=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${WP[k]}</svg>`;
@@ -240,69 +200,186 @@ gust:'<path d="M3 7h9a2.5 2.5 0 1 0-2.5-2.5"/><path d="M3 12h16a2.5 2.5 0 1 1-2.
 drop:'<path d="M12 3.5c3.2 4 5.5 6.8 5.5 9.8a5.5 5.5 0 0 1-11 0c0-3 2.3-5.8 5.5-9.8z"/>',
 up:'<path d="M3 18h18M8 18a4 4 0 0 1 8 0M12 9V3M9.5 5.5 12 3l2.5 2.5"/>',
 heart:'<path fill="currentColor" d="M12 20.5C5 16 3.5 12.8 3.5 9.8A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 8.5 1.8c0 3-1.5 6.2-8.5 10.7z"/>',
-down:'<path d="M3 18h18M8 18a4 4 0 0 1 8 0M12 3v6M9.5 6.5 12 9l2.5-2.5"/>'};
+down:'<path d="M3 18h18M8 18a4 4 0 0 1 8 0M12 3v6M9.5 6.5 12 9l2.5-2.5"/>',snow:'<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 7l2.5-2.5M9.5 19.5 12 17l2.5 2.5"/>'};
 const I=n=>`<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]}</svg>`;
-function wxCard(){
-  if(!WX||!WX.current)return `<section class="g"><div class="lb">${PLACE}</div><div class="big">${WXerr?"Får ikke hentet været":"Henter været …"}</div>${WXerr?'<div class="tm">Prøver igjen om litt</div>':""}</section>`;
-  const c=WX.current,H=WX.hourly,D=WX.daily||{},T=new Date();
-  const ns=T.getFullYear()+"-"+p2(T.getMonth()+1)+"-"+p2(T.getDate())+"T"+p2(T.getHours())+":00",i0=H.time.indexOf(ns);
-  let hrs="";
-  if(i0>=0)for(let k=0;k<6&&i0+k<H.time.length;k++){const i=i0+k,pp=H.precipitation_probability[i];
-    hrs+=`<div><small>${k?H.time[i].slice(11,13):"Nå"}</small><span class="wi">${wic(H.weather_code[i],H.is_day[i])}</span><b>${deg(H.temperature_2m[i])}</b><small>${pp>=20?pp+"%":""}</small></div>`}
-  const nc=i0>=0?H.weather_code[i0]:c.weather_code,nd=i0>=0?H.is_day[i0]:c.is_day;
-  const sr=D.sunrise&&D.sunrise[0],ss=D.sunset&&D.sunset[0];
-  return `<section class="g wx"><div class="wx-h"><div><div class="lb">${PLACE}</div><div class="wx-t">${deg(c.temperature_2m)}</div><div class="wx-d">${wtx(nc)} · føles som ${deg(c.apparent_temperature)}</div></div><div class="wx-i">${wic(nc,nd)}</div></div>`+
-    `<div class="wx-m"><div>${I("wind")}<b>${fmt(c.wind_speed_10m)}</b><small>m/s</small></div><div>${I("gust")}<b>${c.wind_gusts_10m!=null?fmt(c.wind_gusts_10m):"–"}</b><small>m/s</small></div><div>${I("drop")}<b>${fmt(c.precipitation)}</b><small>mm</small></div>${sr&&ss?`<div>${I("up")}<b>${sr.slice(11)}</b><small>sol opp</small></div><div>${I("down")}<b>${ss.slice(11)}</b><small>sol ned</small></div>`:""}</div>`+
-    (hrs?`<div class="wx-hr">${hrs}</div>`:"")+`</section>`;
+
+const WE=["15:10","14:10","15:30","","14:10"];
+const FREE=[["2026-12-19","2027-01-03"]];
+const HOL=[{n:"juleferie",d:"2026-12-18"}];
+const PD=["2027-03-30","2027-05-07"];
+const ymd=s=>{const a=s.split("-");return new Date(+a[0],+a[1]-1,+a[2])};
+const dstr=d=>d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate());
+const inFree=d=>FREE.some(f=>dstr(d)>=f[0]&&dstr(d)<=f[1]);
+function jobState(){
+  const T=new Date(),wd=(T.getDay()+6)%7,nm=T.getHours()*60+T.getMinutes(),s={wd:wd,row:-1,vv:false};
+  if(wd>4||inFree(T))return s;
+  s.vv=wd===3&&nm>=mn("08:30")&&nm<mn("15:30");
+  TP.forEach((r,k)=>{if(mn(r[0])<=nm&&nm<mn(r[1]))s.row=k});
+  if(wd===0&&s.row===11&&nm>=mn("15:10"))s.row=-1;
+  return s;
 }
-const AURL="https://services.swpc.noaa.gov/json/ovation_aurora_latest.json";
-let AU=null,AUerr=false;
-try{const c=JSON.parse(localStorage.getItem("au1")||"null");if(c&&Date.now()-c.at<2*3600e3)AU=c}catch(e){}
-function auLoad(){fetch(AURL).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{
-  const x0=Math.floor(LON),y0=Math.floor(LAT),f=LON-x0,g=LAT-y0,v={};
-  j.coordinates.forEach(c=>{if((c[0]===x0||c[0]===x0+1)&&(c[1]===y0||c[1]===y0+1))v[c[0]+","+c[1]]=c[2]});
-  const a=v[x0+","+y0],b=v[(x0+1)+","+y0],c=v[x0+","+(y0+1)],d=v[(x0+1)+","+(y0+1)];
-  if([a,b,c,d].some(q=>q==null))throw 0;
-  AU={p:Math.round(a*(1-f)*(1-g)+b*f*(1-g)+c*(1-f)*g+d*f*g),at:Date.now()};AUerr=false;
-  try{localStorage.setItem("au1",JSON.stringify(AU))}catch(e){}render()}).catch(()=>{AUerr=true;render()})}
-function auCard(){
-  if(!AU)return `<section class="g"><div class="lb">Nordlys · ${PLACE}</div><div class="big">${AUerr?"Får ikke hentet nordlysmelding":"Henter nordlysmelding …"}</div></section>`;
-  const p=AU.p,lab=p<5?"Svært lav":p<15?"Lav":p<35?"Moderat":p<60?"God":"Svært god",
-        cl=WX&&WX.current?WX.current.cloud_cover:null,D=(WX&&WX.daily)||{},sr=D.sunrise&&D.sunrise[0],ss=D.sunset&&D.sunset[0],T=new Date(),nm=T.getHours()*60+T.getMinutes();
-  const dk=sr&&ss?(nm<mn(sr.slice(11))||nm>=mn(ss.slice(11))):null;
-  const info=[cl!=null?"Skydekke "+cl+" %":"",dk===null?"":dk?"Mørkt nå":"Lyst nå, nordlys ses først etter solnedgang "+ss.slice(11)].filter(Boolean).join(" · ");
-  return `<section class="g wx"><div class="wx-h"><div><div class="lb">Nordlys · ${PLACE}</div><div class="wx-t">${p}<span class="pc">%</span></div><div class="wx-d">${lab} sjanse</div></div></div><div class="bar"><i style="width:${Math.max(p,2)}%"></i></div>${info?`<div class="wx-d" style="font-size:.9rem">${info}</div>`:""}</section>`;
+function jobStat(){
+  const s=jobState();
+  if(s.wd>4)return null;
+  if(s.vv)return ["Verv UDF","Frikjøpt til vervet"];
+  if(s.row<0)return null;
+  const r=TP[s.row],c=r[4][s.wd],t=r[0]+"–"+r[1];
+  if(s.wd===2&&s.row>=10)return ["Planmøte","13:25–15:30"];
+  if(r[3]==="b"){const n=r[2]==="SPI"?"Spisepause":"Friminutt";return c?["Inspeksjon "+c,n+" "+t]:[n,t]}
+  return c?[c,"Time "+r[2]+" · "+t]:["Ledig time","Time "+r[2]+" · "+t];
 }
-function wxLoad(){fetch(WURL).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{WX=j;WXat=Date.now();WXerr=false;try{localStorage.setItem("wx3",JSON.stringify({d:j,at:WXat}))}catch(e){}render()}).catch(()=>{WXerr=true;render()})}
-const tod=(new Date().getDay()+6)%7;let day=tod;
+let jobManual=null,lastAuto=null;
+function workNow(){const T=new Date(),wd=(T.getDay()+6)%7,nm=T.getHours()*60+T.getMinutes();return wd<5&&wd!==3&&!inFree(T)&&nm>=480&&nm<mn(WE[wd])}
+function jobIsOpen(){const a=workNow();if(a!==lastAuto){lastAuto=a;jobManual=null}return jobManual===null?a:jobManual}
+function jobTile(){
+  const st=jobStat();
+  return `<button class="g tile job${st?" live":""}" data-sheet="1" type="button" aria-expanded="${jobIsOpen()}"><span class="ic">${I("heart")}</span><span class="tx"><span class="lb">Arbeid</span><br><b>${st?st[0]:"Timeplan"}</b>${st?`<small>${st[1]}</small>`:""}</span><i class="ch"></i></button>`;
+}
+function tpHTML(){
+  const s=jobState();
+  let h=`<table class="tp" aria-label="Timeplan for uka"><thead><tr><th class="t"></th>${TD.map((n,i)=>`<th${i===s.wd?' class="today"':""}>${n}</th>`).join("")}</tr></thead><tbody>`;
+  TP.forEach((r,k)=>{
+    const b=r[3]==="b",cur=k===s.row,tm=r[0]+"–"+r[1];
+    h+=`<tr class="${b?"b":"l"}"><td class="lab${cur?" on":""}"${cur?' aria-current="time"':""}>${b?`<span class="ty">${r[2]}</span>`:`<b>${r[2]}</b>`}<span class="tt">${tm}</span></td>`;
+    for(let d=0;d<5;d++){
+      if(d===3){if(k===0)h+=`<td class="v${s.vv?" on":""}"${s.vv?' aria-current="time"':""} rowspan="${TP.length}">Verv<br>UDF</td>`;continue}
+      if(d===2&&k===11)continue;
+      const c=r[4][d],pm=d===2&&k===10,act=s.wd===d&&(pm?(s.row===10||s.row===11):cur),cl=[];
+      if(!c)cl.push("e");else if(b)cl.push("k");
+      if(act)cl.push("on");
+      h+=`<td${cl.length?` class="${cl.join(" ")}"`:""}${pm?' rowspan="2"':""}${act?' aria-current="time"':""}>${c==="Teammøte"?"Team\u00admøte":c}</td>`;
+    }
+    h+="</tr>";
+  });
+  return h+"</tbody></table>";
+}
+const det=(id,t,s,b)=>`<details class="g" id="${id}"><summary><span>${t}${s?`<small>${s}</small>`:""}</span></summary>${b}</details>`;
+const ul=a=>`<ul class="l">${a.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+const PLACE="Værøy",LAT=67.6597,LON=12.6847;
+const WURL="https://api.open-meteo.com/v1/forecast?latitude="+LAT+"&longitude="+LON+"&hourly=temperature_2m,apparent_temperature,weather_code,precipitation,wind_speed_10m,wind_gusts_10m,is_day&timezone=Europe%2FOslo&wind_speed_unit=ms&forecast_days=2";
+let WX=null,WXerr=false;
+try{const c=JSON.parse(localStorage.getItem("wx4")||"null");if(c&&Date.now()-c.at<3*3600e3)WX=c.d}catch(e){}
+function wxLoad(){fetch(WURL).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{WX=j;WXerr=false;try{localStorage.setItem("wx4",JSON.stringify({d:j,at:Date.now()}))}catch(e){}render()}).catch(()=>{WXerr=true;render()})}
+const avg=a=>a.reduce((s,x)=>s+x,0)/a.length;
+const pick=(a,s)=>a[s%a.length];
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+function nextInsp(wd,nm){for(let k=0;k<TP.length;k++){const r=TP[k];if(r[3]==="b"&&r[4][wd]&&mn(r[0])>nm)return r[0]}return null}
+function advice(){
+  if(!WX||!WX.hourly)return null;
+  const H=WX.hourly,T=new Date(),nowH=T.getHours(),nm=nowH*60+T.getMinutes(),wd=(T.getDay()+6)%7,ds=dstr(T),dn=T.getDate();
+  if(nowH>=22)return {night:1};
+  let a=wd<5?8:9,b=wd<5?15:17,late=false;
+  if(nowH>=b){a=nowH;b=22;late=true}else if(nowH>a)a=nowH;
+  const ix=[];
+  H.time.forEach((t,k)=>{if(t.slice(0,10)===ds){const h=+t.slice(11,13);if(h>=a&&h<b)ix.push(k)}});
+  if(!ix.length)return {night:1};
+  const g=k=>ix.map(i=>H[k][i]);
+  const ap=g("apparent_temperature"),te=g("temperature_2m"),wc=g("weather_code"),pr=g("precipitation"),ws=g("wind_speed_10m"),gu=g("wind_gusts_10m"),dy=g("is_day");
+  const n=ix.length,A=avg(ap),Tm=avg(te),tmin=Math.min(...te),tmax=Math.max(...te),wmax=Math.max(...ws),gmax=Math.max(...gu),mm=pr.reduce((s,x)=>s+x,0);
+  const cnt=f=>wc.filter(f).length;
+  const th=cnt(c=>c>=95)>0,sn=cnt(c=>(c>=71&&c<=77)||c===85||c===86),rn=cnt(c=>(c>=51&&c<=67)||(c>=80&&c<=82)),fg=cnt(c=>c===45||c===48),clr=cnt(c=>c<=1),cl=cnt(c=>c>=2&&c<=3);
+  const snow=sn>=2||(sn>=1&&mm>=.5),wet=!snow&&(rn>=2||mm>=1.5||(rn>=1&&mm>=.5));
+  const storm=wmax>=14||gmax>=22,windy=wmax>=9||gmax>=15;
+  const wetShare=(rn+sn)/n,variable=n>=4&&((wetShare>0&&wetShare<.6)||(tmax-tmin>=6));
+  const dark=dy.every(x=>!x);
+  const glatt=(tmin<=.5&&tmax>=-1&&(wet||snow||mm>.3))||wc.some(c=>c===56||c===57||c===66||c===67);
+  const TW=A<=-8?"bitende kaldt":A<=-2?"kaldt":A<=2?"kjølig":A<=7?"friskt":A<=12?"mildt":A<=17?"lunt":"varmt";
+  let ph;
+  if(th)ph=TW+" med torden";else if(storm)ph=TW+" og stormfullt";else if(snow)ph=TW+" med snø";else if(wet&&windy)ph=TW+", vått og blåsende";else if(wet)ph=TW+" med regn";else if(windy)ph=TW+" og blåsende";else if(fg>=2)ph=TW+" og tåkete";else if(variable)ph=TW+" og skiftende vær";else if(clr>=n*.6)ph=TW+" og klart";else ph=TW+" og grått";
+  const head=cap(ph)+(late?" i kveld":" i dag");
+  const nr=Math.round(Tm),gr=Math.abs(nr)===1?" grad":" grader",sub=nr===0?"Rundt null grader":nr<0?"I snitt minus "+(-nr)+gr:"I snitt rundt "+nr+gr;
+  const isDay=dy.some(x=>x);
+  const icon=th?WS("torden"):snow?WS("snoe"):wet?WS("regn"):fg>=2?WS("taake"):(storm||windy)?I("wind"):clr>=n*.6?WS(isDay?"sol":"maane"):cl>=1?WS("sky"):WS(isDay?"sol-sky":"maane-sky");
+  const S=[];
+  if(th)S.push("Hold deg helst inne hvis det smeller, og ta friminuttet ved vinduet.");
+  if(storm)S.push(pick(["Vinden tar godt i, så ta en vindtett jakke og ei lue som sitter fast.","Det blåser skikkelig. Hold godt i dørene og ta på det vindtette."],dn));
+  else if(windy)S.push("Det blåser friskt, så et vindtett ytterlag er lurt.");
+  if(snow)S.push("Det kommer snø, så ta støvler som tåler vått.");
+  else if(wet)S.push(pick(["Ta regnjakke og vanntette sko.","Regntøyet er dagens beste venn, så ta det med."],dn));
+  if(!(wet&&A>7)){
+    S.push(A<=-8?"Ull nærmest kroppen, vinterjakke, lue, votter og tykke støvler.":A<=-2?"Vinterjakke, lue, votter og støvler, så blir det ålreit.":A<=2?"Ta vinterjakka og gode sko, og gjerne ei lue.":A<=7?"Ta på en varm jakke, og ha lua i lomma.":A<=12?"En vanlig jakke holder, kanskje med en tynn lue.":A<=17?"En lett jakke eller en varm genser holder.":"Lette klær går fint, men ha en jakke til kvelden.");
+  }
+  if(variable&&!storm)S.push("Været kan skifte fort, så ha lag på lag.");
+  if(glatt)S.push("Pass opp for glatte flekker.");
+  if(fg>=2)S.push("Det blir tåke, så ta det rolig på veien.");
+  if(dark)S.push("Det er mørkt ute, så husk refleks eller hodelykt.");
+  const ins=wd<5&&!late&&!inFree(T)?nextInsp(wd,nm):null;
+  if(ins&&(A<=7||wet||snow||windy))S.push("Du har inspeksjon klokka "+ins+", så ha jakka klar.");
+  if(clr>=n*.6&&A<=2&&!windy&&!dark)S.push("Lyset blir fint, så få med deg litt frisk luft.");
+  S.push(pick(["Husk noe varmt å drikke.","Du fikser dagen fint.","Ta deg tid til en kopp te i friminuttet.","Noe godt i termosen hører med."],dn+1));
+  return {head,sub,body:S.slice(0,3).join(" "),icon};
+}
+function wrCard(){
+  const a=advice();
+  if(!a)return `<section class="g wr"><div class="lb">${PLACE}</div><div class="wr-t">${WXerr?"Fikk ikke hentet været":"Sjekker været …"}</div><p class="wr-b">${WXerr?"Kikk ut vinduet før du går, så går det fint.":"Et lite øyeblikk."}</p></section>`;
+  if(a.night)return `<section class="g wr"><div class="lb">${PLACE}</div><div class="wr-t">Nå er det natt</div><p class="wr-b">Sov godt, Lene.</p></section>`;
+  return `<section class="g wr"><div class="wx-h"><div><div class="lb">${PLACE}</div><div class="wr-t">${a.head}</div><div class="wr-s">${a.sub}</div></div><div class="wx-i">${a.icon}</div></div><p class="wr-b">${a.body}</p></section>`;
+}
+function moonTile(){
+  const SY=29.530588853,age=(((Date.now()-Date.UTC(2000,0,6,18,14))/864e5)%SY+SY)%SY,f=age/SY,k=Math.cos(2*Math.PI*f),rx=(16*Math.abs(k)).toFixed(2);
+  const B=[1.84,5.53,9.22,12.91,16.61,20.3,23.99,27.68],NM=["Nymåne","Voksende sigd","Første kvarter","Voksende måne","Fullmåne","Minkende måne","Siste kvarter","Minkende sigd","Nymåne"];
+  let i=0;while(i<B.length&&age>=B[i])i++;
+  const toFull=((SY/2-age)%SY+SY)%SY,toNew=(SY-age)%SY,full=i===4?false:(i===0||i===8)?true:toFull<toNew,x=full?toFull:toNew,dd=Math.round(x);
+  const when=dd<=0?"i dag":dd===1?"i morgen":"om "+dd+" dager";
+  const svg=`<svg class="moon" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="rgba(110,70,90,.16)"/><g${f>.5?' transform="translate(40 0) scale(-1 1)"':""}><path d="M20 4A16 16 0 0 1 20 36A${rx} 16 0 0 ${k>0?0:1} 20 4Z" fill="#fff" fill-opacity=".95"/></g><circle cx="20" cy="20" r="16" fill="none" stroke="rgba(178,76,108,.45)" stroke-width="1.2"/></svg>`;
+  return `<section class="g sq"><div class="lb">Måne</div>${svg}<b>${NM[i]}</b><small>${full?"Fullmåne":"Nymåne"} ${when}</small></section>`;
+}
+function nextUp(){
+  const T=new Date(),nm=T.getHours()*60+T.getMinutes();
+  for(let o=0;o<10;o++){
+    const d=new Date(T.getFullYear(),T.getMonth(),T.getDate()+o),wd=(d.getDay()+6)%7;
+    if(wd>4)continue;
+    if(inFree(d))return {free:1};
+    if(wd===3){if(o>0||nm<mn("08:30"))return {o,wd,t:"08:30",title:"Verv UDF",sub:"Frikjøpt"};continue}
+    for(let k=0;k<TP.length;k++){
+      const r=TP[k],c=r[4][wd];
+      if(!c||(wd===2&&k===11))continue;
+      if(o===0&&mn(r[0])<=nm)continue;
+      const b=r[3]==="b",mt=c==="Planmøte"||c==="Teammøte";
+      return {o,wd,t:r[0],title:b?"Inspeksjon "+c:c,sub:mt?"Møte":b?(r[2]==="SPI"?"Spisepause":"Friminutt"):"Time "+r[2]};
+    }
+  }
+  return null;
+}
+function nextTile(){
+  const u=nextUp();
+  if(!u)return `<section class="g sq"><div class="lb">Neste</div><b>Ingenting planlagt</b></section>`;
+  if(u.free)return `<section class="g sq"><div class="lb">Neste</div><b>Juleferie</b><small>God jul, Lene</small></section>`;
+  const nm=new Date().getHours()*60+new Date().getMinutes(),diff=mn(u.t)-nm;
+  const when=u.o===0?(diff<=90?"om "+diff+" min":"kl. "+u.t):u.o===1?"i morgen kl. "+u.t:DN[u.wd].toLowerCase()+" kl. "+u.t;
+  return `<section class="g sq"><div class="lb">Neste</div><b>${u.title}</b><small>${u.sub}<br>${when}</small></section>`;
+}
+function cdCard(){
+  const T=new Date(),nm=T.getHours()*60+T.getMinutes(),td=new Date(T.getFullYear(),T.getMonth(),T.getDate());
+  for(const h of HOL){
+    const d=ymd(h.d),wd=(d.getDay()+6)%7,days=Math.round((d-td)/864e5);
+    if(days<0||(days===0&&nm>=mn(WE[wd]||"15:30")))continue;
+    let sd=0;
+    for(let o=0;o<=days;o++){const x=new Date(td.getFullYear(),td.getMonth(),td.getDate()+o),w=(x.getDay()+6)%7;if(w>4||PD.includes(dstr(x)))continue;if(o===0&&nm>=mn(WE[w]||"15:30"))continue;sd++}
+    const big=days===0?`<div class="t">Siste skoledag før ${h.n}en er i dag</div>`:`<div><span class="n">${days}</span> <span class="t">${days===1?"dag":"dager"} til ${h.n}</span></div>`;
+    return `<section class="g cd"><span class="ic">${I("snow")}</span><div><div class="lb">Nedtelling</div>${big}<div class="lb">${sd} ${sd===1?"skoledag":"skoledager"} igjen</div></div></section>`;
+  }
+  return "";
+}
 function render(){
   const op=[...document.querySelectorAll("details[open]")].map(d=>d.id);
-  const T=new Date(),nm=T.getHours()*60+T.getMinutes(),E=evs(day);
-  let cur=-1,nx=0;
-  if(day===tod){E.forEach((v,k)=>{if(mn(v[0])<=nm&&nm<mn(v[1]))cur=k});nx=E.findIndex(v=>mn(v[0])>nm)}
-  let h=jobTile()+(jobIsOpen()?`<section class="g tpc">${tpHTML()}</section>`:"")+wxCard()+auCard();
-  const w=WI[day]<0?null:WO[WI[day]];
-  h+=`<div class="tiles"><button class="g tile" data-o="trening"><span class="ic">${I("heart")}</span><span><span class="lb">Trening</span><br><b>${w?w[0]:"Hviledag"}</b></span></button><button class="g tile" data-o="mat"><span class="ic">${I("heart")}</span><span><span class="lb">Middag</span><br><b>${MID[day]}</b></span></button></div>`;
-  h+=`<section class="g"><h2>${DN[day]}</h2><ul class="tl">${E.map((v,k)=>`<li class="${day===tod&&mn(v[1])<=nm?"past":""}${k===cur?" now":""}"><span class="tm">${v[0]}</span><span><b>${v[2]}</b>${v[3]?`<small>${v[3]}</small>`:""}</span></li>`).join("")}</ul></section>`;
-  h+=det("mat","Mat","",`<dl><dt>Frokost</dt><dd>Vann og te, evt. salte peanøtter</dd><dt>Lunsj</dt><dd>${day<5?LU[0]:LU[day-4]}</dd><dt>Middag</dt><dd>${MID[day]}</dd><dt>Mellommåltid</dt><dd>Gresk yoghurt med blåbær og mandelsmør</dd></dl>`);
+  const T=new Date(),nm=T.getHours()*60+T.getMinutes(),tod=(T.getDay()+6)%7,E=evs(tod);
+  let cur=-1;E.forEach((v,k)=>{if(mn(v[0])<=nm&&nm<mn(v[1]))cur=k});
+  const w=WI[tod]<0?null:WO[WI[tod]];
+  let h=jobTile()+(jobIsOpen()?`<section class="g tpc">${tpHTML()}</section>`:"")+wrCard()+`<div class="tiles">${moonTile()}${nextTile()}</div>`+cdCard();
   h+=det("trening","Trening",w?w[0]:"Hviledag",w?ul(w[1]):'<p class="lb">Ingen økt i dag.</p>');
-  h+=det("butikk","Handleliste","",SHOP.map(g=>`<div class="gr">${g[0]}</div>${ul(g[1])}`).join(""));
+  h+=det("dag","Dagen min","",`<ul class="tl">${E.map((v,k)=>`<li class="${mn(v[1])<=nm?"past":""}${k===cur?" now":""}"><span class="tm">${v[0]}</span><span><b>${v[2]}</b>${v[3]?`<small>${v[3]}</small>`:""}</span></li>`).join("")}</ul>`);
   document.getElementById("v").innerHTML=h;
   op.forEach(i=>{const d=document.getElementById(i);if(d)d.open=true});
-  document.querySelectorAll("#days button").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.d===day));
+  const hr=T.getHours();
+  document.getElementById("hi").textContent=(hr<10?"God morgen":hr<12?"God formiddag":hr<18?"God ettermiddag":"God kveld")+", Lene";
+  document.getElementById("dt").textContent=T.toLocaleDateString("nb-NO",{weekday:"long",day:"numeric",month:"long"});
   place();
 }
-const T0=new Date(),hr=T0.getHours();
-document.getElementById("hi").innerHTML=(hr<10?"God morgen":hr<12?"God formiddag":hr<18?"God ettermiddag":"God kveld")+", Lene";
-document.getElementById("dt").textContent=T0.toLocaleDateString("nb-NO",{weekday:"long",day:"numeric",month:"long"});
-document.getElementById("days").innerHTML=DN.map((n,i)=>`<button data-d="${i}" class="${i===tod?"today":""}" aria-pressed="false">${n.slice(0,3)}</button>`).join("");
 document.addEventListener("click",e=>{
   if(e.target.closest("[data-sheet]")){jobManual=!jobIsOpen();render();return}
-  const t=e.target.closest("[data-o]");
-  if(t){const d=document.getElementById(t.dataset.o);if(d){d.open=true;d.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"start"})}return}
-  const b=e.target.closest("[data-d]");if(b){day=+b.dataset.d;render()}
 });
-render();wxLoad();auLoad();setInterval(render,60000);setInterval(wxLoad,15*60000);setInterval(auLoad,30*60000);
+render();wxLoad();setInterval(render,60000);setInterval(wxLoad,15*60000);
 </script>
 </body>
 </html>
