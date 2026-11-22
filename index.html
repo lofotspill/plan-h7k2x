@@ -111,6 +111,17 @@ ul.l li:first-child{border-top:0}
 .cd{display:flex;align-items:center;gap:.9rem}
 .cd .n{font-size:2.4rem;font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--acc)}
 .cd .t{font-weight:600}
+.hk{list-style:none;margin:0;padding:0}
+.hk li{display:flex;align-items:center;gap:.6rem;padding:.55rem 0;border-top:1px solid var(--ln)}
+.hk li:first-child{border-top:0}
+.hk label{flex:1;display:flex;align-items:center;gap:.7rem;min-width:0;overflow-wrap:anywhere}
+.hk input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;width:1.4rem;height:1.4rem;margin:0;border-radius:50%;border:1.5px solid var(--acc);background:rgba(255,255,255,.6)}
+.hk input[type=checkbox]:checked{background:var(--acc);box-shadow:inset 0 0 0 3.5px #fff}
+.hk .dn{text-decoration:line-through;color:var(--mute)}
+.hk .x{border:0;background:none;font-size:1.4rem;line-height:1;color:var(--mute);padding:.2rem .4rem}
+.hf{display:flex;gap:.5rem;margin-top:.7rem}
+.hf input{flex:1;min-width:0;font:inherit;font-size:1rem;padding:.6rem .9rem;border-radius:2rem;border:1px solid rgba(255,255,255,.8);background:rgba(255,255,255,.6);color:var(--ink)}
+.hf button{border:0;border-radius:2rem;padding:.6rem 1rem;font-weight:600;background:rgba(255,255,255,.8);box-shadow:0 2px 8px var(--sh)}
 .tp td.e.on{background:#fff}
 .tp tr.l td.e.on::after{content:"ledig";font-size:.58rem;font-weight:500;color:var(--mute)}
 </style>
@@ -356,19 +367,26 @@ function cdCard(){
     if(days<0||(days===0&&nm>=mn(WE[wd]||"15:30")))continue;
     let sd=0;
     for(let o=0;o<=days;o++){const x=new Date(td.getFullYear(),td.getMonth(),td.getDate()+o),w=(x.getDay()+6)%7;if(w>4||PD.includes(dstr(x)))continue;if(o===0&&nm>=mn(WE[w]||"15:30"))continue;sd++}
-    const big=days===0?`<div class="t">Siste skoledag før ${h.n}en er i dag</div>`:`<div><span class="n">${days}</span> <span class="t">${days===1?"dag":"dager"} til ${h.n}</span></div>`;
-    return `<section class="g cd"><span class="ic">${I("snow")}</span><div><div class="lb">Nedtelling</div>${big}<div class="lb">${sd} ${sd===1?"skoledag":"skoledager"} igjen</div></div></section>`;
+    const big=days===0?`<div class="t">Siste arbeidsdag før ${h.n}en er i dag</div>`:`<div><span class="n">${days}</span> <span class="t">${days===1?"dag":"dager"} til ${h.n}</span></div>`;
+    return `<section class="g cd"><span class="ic">${I("snow")}</span><div><div class="lb">Nedtelling</div>${big}<div class="lb">${sd} ${sd===1?"arbeidsdag":"arbeidsdager"} igjen</div></div></section>`;
   }
   return "";
 }
+let HK=[];try{HK=JSON.parse(localStorage.getItem("hk1")||"[]")}catch(e){}
+const hkSave=()=>{try{localStorage.setItem("hk1",JSON.stringify(HK))}catch(e){}};
+const esc=t=>t.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function hkHTML(){
+  return `<ul class="hk">${HK.map((x,i)=>`<li><label><input type="checkbox" data-hk="${i}"${x.d?" checked":""}><span${x.d?' class="dn"':""}>${esc(x.t)}</span></label><button type="button" class="x" data-hd="${i}" aria-label="Fjern">×</button></li>`).join("")}</ul><form class="hf" id="hkf"><input id="hki" type="text" placeholder="Ny huskelapp …" autocomplete="off" enterkeyhint="done"><button type="submit">Legg til</button></form>`;
+}
 function render(){
+  if(document.activeElement&&document.activeElement.id==="hki")return;
   const op=[...document.querySelectorAll("details[open]")].map(d=>d.id);
-  const T=new Date(),nm=T.getHours()*60+T.getMinutes(),tod=(T.getDay()+6)%7,E=evs(tod);
-  let cur=-1;E.forEach((v,k)=>{if(mn(v[0])<=nm&&nm<mn(v[1]))cur=k});
+  const T=new Date(),nm=T.getHours()*60+T.getMinutes(),tod=(T.getDay()+6)%7;
   const w=WI[tod]<0?null:WO[WI[tod]];
   let h=jobTile()+(jobIsOpen()?`<section class="g tpc">${tpHTML()}</section>`:"")+wrCard()+`<div class="tiles">${moonTile()}${nextTile()}</div>`+cdCard();
   h+=det("trening","Trening",w?w[0]:"Hviledag",w?ul(w[1]):'<p class="lb">Ingen økt i dag.</p>');
-  h+=det("dag","Dagen min","",`<ul class="tl">${E.map((v,k)=>`<li class="${mn(v[1])<=nm?"past":""}${k===cur?" now":""}"><span class="tm">${v[0]}</span><span><b>${v[2]}</b>${v[3]?`<small>${v[3]}</small>`:""}</span></li>`).join("")}</ul>`);
+  const hn=HK.filter(x=>!x.d).length;
+  h+=det("husk","Huskeliste",hn?hn+" igjen":"Ingenting å huske",hkHTML());
   document.getElementById("v").innerHTML=h;
   op.forEach(i=>{const d=document.getElementById(i);if(d)d.open=true});
   const hr=T.getHours();
@@ -376,7 +394,14 @@ function render(){
   document.getElementById("dt").textContent=T.toLocaleDateString("nb-NO",{weekday:"long",day:"numeric",month:"long"});
   place();
 }
+document.addEventListener("change",e=>{const c=e.target.closest("[data-hk]");if(c){HK[+c.dataset.hk].d=c.checked;hkSave();render()}});
+document.addEventListener("submit",e=>{
+  if(e.target.id!=="hkf")return;e.preventDefault();
+  const i=document.getElementById("hki"),t=i.value.trim();if(!t)return;
+  HK.push({t:t,d:false});hkSave();i.blur();render();document.getElementById("hki").focus();
+});
 document.addEventListener("click",e=>{
+  const x=e.target.closest("[data-hd]");if(x){HK.splice(+x.dataset.hd,1);hkSave();render();return}
   if(e.target.closest("[data-sheet]")){jobManual=!jobIsOpen();render();return}
 });
 render();wxLoad();setInterval(render,60000);setInterval(wxLoad,15*60000);
