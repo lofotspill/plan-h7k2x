@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#6f8fb8">
+<meta name="theme-color" content="#7f9cc4">
 <title>Lenes ukeplan</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
@@ -11,7 +11,8 @@
 *,*::before,*::after{box-sizing:inherit}
 html{background-color:#7f9cc4;scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;min-height:100%;background:transparent;color:var(--ink);font:400 1rem/1.45 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
-#et,#eb{position:fixed;left:0;right:0;z-index:-1;pointer-events:none}#et{top:0;height:calc(env(safe-area-inset-top,0px) + 2px);background:#2c5992}#eb{bottom:0;height:calc(env(safe-area-inset-bottom,0px) + 2px);background:#b8c7e1}
+#et,#eb{position:fixed;left:0;right:0;z-index:-1;pointer-events:none}#et{top:0;height:calc(env(safe-area-inset-top,0px) + 2px);background:#7f9cc4}#eb{bottom:0;height:calc(env(safe-area-inset-bottom,0px) + 2px);background:#7f9cc4}
+#bg::before,#bg::after{content:"";position:absolute;left:0;right:0;pointer-events:none}#bg::before{top:0;height:80px;background:linear-gradient(#7f9cc4,rgba(127,156,196,0))}#bg::after{bottom:0;height:190px;background:linear-gradient(rgba(127,156,196,0),#7f9cc4)}
 #bg{position:fixed;inset:0;z-index:-1;pointer-events:none;background:#dbe6f4 url(bg3.jpg) 0% 0%/cover no-repeat}
 main{max-width:30rem;margin:0 auto;padding:1.4rem 1rem 3rem}
 h1{font-size:clamp(1.35rem,7vw,2rem);line-height:1.1;letter-spacing:-.03em;font-weight:600;white-space:nowrap;color:#16223d;margin:.5rem .3rem .3rem}
