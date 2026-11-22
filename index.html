@@ -250,7 +250,7 @@ function jobStat(){
   const r=TP[s.row],c=r[4][s.wd],t=r[0]+"–"+r[1];
   if(s.wd===2&&s.row>=10)return ["Planmøte","13:25–15:30"];
   if(r[3]==="b"){const n=r[2]==="SPI"?"Spisepause":"Friminutt";return c?["Inspeksjon "+c,n+" "+t]:[n,t]}
-  return c?[c,"Time "+r[2]+" · "+t]:["Ledig time","Time "+r[2]+" · "+t];
+  const mt=c==="Teammøte",n=mt?t:r[2]+". time · "+t;return c?[c,n]:["Ledig time",n];
 }
 let jobManual=null,lastAuto=null;
 function workNow(){const T=new Date(),wd=(T.getDay()+6)%7,nm=T.getHours()*60+T.getMinutes();return wd<5&&wd!==3&&!inFree(T)&&nm>=480&&nm<mn(WE[wd])}
@@ -378,7 +378,7 @@ function nextUp(){
       if(!c||(wd===2&&k===11))continue;
       if(o===0&&mn(r[0])<=nm)continue;
       const b=r[3]==="b",mt=c==="Planmøte"||c==="Teammøte";
-      return {o,wd,t:r[0],title:b?"Inspeksjon "+c:c,sub:mt?"Møte":b?(r[2]==="SPI"?"Spisepause":"Friminutt"):"Time "+r[2]};
+      return {o,wd,t:r[0],title:b?"Inspeksjon "+c:c,sub:mt?"":b?(r[2]==="SPI"?"Spisepause":"Friminutt"):r[2]+". time"};
     }
   }
   return null;
@@ -389,7 +389,7 @@ function nextTile(){
   if(u.free)return `<section class="g sq"><div class="lb">Neste</div><b>Juleferie</b><small>God jul, Lene</small></section>`;
   const nm=new Date().getHours()*60+new Date().getMinutes(),diff=mn(u.t)-nm;
   const when=u.o===0?(diff<=90?"om "+diff+" min":"kl. "+u.t):u.o===1?"i morgen kl. "+u.t:DN[u.wd].toLowerCase()+" kl. "+u.t;
-  return `<section class="g sq"><div class="lb">Neste</div><b>${u.title}</b><small>${u.sub}<br>${when}</small></section>`;
+  return `<section class="g sq"><div class="lb">Neste</div><b>${u.title}</b><small>${u.sub?u.sub+"<br>":""}${when}</small></section>`;
 }
 function cdCard(){
   const T=new Date(),nm=T.getHours()*60+T.getMinutes(),td=new Date(T.getFullYear(),T.getMonth(),T.getDate());
