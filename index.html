@@ -83,8 +83,9 @@ ul.l li:first-child{border-top:0}
 .g.tpc{padding:.5rem}
 .tp{width:100%;border-collapse:separate;border-spacing:.15rem;table-layout:fixed}
 .tp th{padding:.35rem 0;font-size:.78rem;font-weight:700}
+.sq .ml{display:flex;flex-direction:column;gap:.1rem;line-height:1.25}
 .tp th.t{width:3.7rem}
-.tp th.today{color:var(--acc)}
+.tp th.today{color:var(--ic);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.25rem}
 .tp td{padding:.15rem .1rem;text-align:center;font-size:.68rem;line-height:1.2;font-weight:500;border-radius:.4rem;overflow-wrap:anywhere;background:rgba(255,255,255,.5)}
 .tp tr.l td{height:2.9rem}
 .tp tr.b td{height:1.5rem}
@@ -105,7 +106,7 @@ ul.l li:first-child{border-top:0}
 .tiles{margin-bottom:.8rem}
 .tiles .g{margin:0;aspect-ratio:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:.9rem}
 .sq b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:1.1rem;line-height:1.2;font-weight:700;letter-spacing:-.02em;margin:.15rem 0}
-.sq small{display:block;color:var(--mute);font-size:.8rem;line-height:1.35}
+.sq small{display:block;color:var(--mute);font-size:.74rem;line-height:1.35}
 .sq .lb{margin-bottom:.2rem}
 .moon{display:block;width:4rem;height:4rem;margin:.1rem auto .3rem}
 .wr-t{font-size:1.45rem;line-height:1.15;letter-spacing:-.03em;font-weight:700;margin:.15rem 0 .1rem}
@@ -359,11 +360,11 @@ function moonTile(){
   const SY=29.530588853,age=(((Date.now()-Date.UTC(2000,0,6,18,14))/864e5)%SY+SY)%SY,f=age/SY,k=Math.cos(2*Math.PI*f),rx=(16*Math.abs(k)).toFixed(2);
   const B=[1.84,5.53,9.22,12.91,16.61,20.3,23.99,27.68],NM=["Nymåne","Voksende sigd","Første kvarter","Voksende måne","Fullmåne","Minkende måne","Siste kvarter","Minkende sigd","Nymåne"];
   let i=0;while(i<B.length&&age>=B[i])i++;
-  const toFull=((SY/2-age)%SY+SY)%SY,toNew=(SY-age)%SY,full=i===4?false:(i===0||i===8)?true:toFull<toNew,x=full?toFull:toNew,dd=Math.round(x);
-  const when=dd<=0?"i dag":dd===1?"i morgen":"om "+dd+" dager";
+  const Q=[["Nymåne",0],["Første kvarter",SY/4],["Fullmåne",SY/2],["Siste kvarter",SY*3/4]].map(([n,t])=>[n,((t-age)%SY+SY)%SY]).sort((p,q)=>p[1]-q[1]).slice(0,3);
+  const lst=Q.map(([n,x])=>{const dd=Math.round(x);return `<span>${n} ${dd<=0?"i dag":dd===1?"i morgen":"om "+dd+" d"}</span>`}).join("");
   const d=`M20 4A16 16 0 0 1 20 36A${rx} 16 0 0 ${k>0?0:1} 20 4Z`,fl=f>.5?' transform="translate(40 0) scale(-1 1)"':"";
   const svg=`<svg class="moon" viewBox="0 0 40 40" aria-hidden="true"><defs><radialGradient id="mgl"><stop offset=".55" stop-color="#fff6d8" stop-opacity=".7"/><stop offset="1" stop-color="#fff6d8" stop-opacity="0"/></radialGradient><linearGradient id="mlt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffdf2"/><stop offset="1" stop-color="#f0dca6"/></linearGradient><clipPath id="mcl"><path d="${d}"/></clipPath></defs><circle cx="20" cy="20" r="19.5" fill="url(#mgl)"/><circle cx="20" cy="20" r="16" fill="#233a68"/><g${fl}><path d="${d}" fill="url(#mlt)"/><g clip-path="url(#mcl)" fill="#b9a56b" fill-opacity=".35"><circle cx="26" cy="13" r="2.6"/><circle cx="29.5" cy="23.5" r="3.3"/><circle cx="23.5" cy="29" r="1.9"/><circle cx="31" cy="16.5" r="1.4"/><circle cx="14" cy="22" r="2.2"/></g></g><circle cx="20" cy="20" r="16" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width=".8"/></svg>`;
-  return `<section class="g sq"><div class="lb">Måne</div>${svg}<b>${NM[i]}</b><small>${full?"Fullmåne":"Nymåne"} ${when}</small></section>`;
+  return `<section class="g sq"><div class="lb">Måne</div>${svg}<b>${NM[i]}</b><small class="ml">${lst}</small></section>`;
 }
 function nextUp(){
   const T=new Date(),nm=T.getHours()*60+T.getMinutes();
@@ -407,20 +408,20 @@ const hkSave=()=>{try{localStorage.setItem("hk1",JSON.stringify(HK))}catch(e){}}
 const esc=t=>t.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const PK=[
  {d:"2026-11-30",t:"10:15-11:00",x:"Time med elevrådet"},
- {d:"2026-12-01",t:"09:15",x:"Helikopter Værøy til Bodø (sjekk tiden)"},
+ {d:"2026-12-01",t:"09:15",x:"Helikopter Værøy til Bodø"},
  {d:"2026-12-01",t:"",x:"Kurs"},
  {d:"2026-12-03",t:"14:30",x:"Omstillingsmøte"},
- {d:"2026-12-03",t:"16:30",x:"Helikopter hjem fra Bodø (sjekk tiden)"},
- {d:"2026-12-07",t:"17:15",x:"Helikopter til Bodø, reise til OO25 (sjekk tiden)"},
+ {d:"2026-12-03",t:"16:30",x:"Helikopter hjem fra Bodø"},
+ {d:"2026-12-07",t:"17:15",x:"Helikopter til Bodø, reise til OO25"},
  {d:"2026-12-08",t:"",x:"OO25-møte"},
- {d:"2026-12-08",t:"16:30",x:"Helikopter hjem fra Bodø (sjekk tiden)"}
+ {d:"2026-12-08",t:"16:30",x:"Helikopter hjem fra Bodø"}
 ];
 const MN=["jan","feb","mar","apr","mai","jun","jul","aug","sep","okt","nov","des"],WDN=["søn","man","tir","ons","tor","fre","lør"];
 function pkList(){const td=dstr(new Date());return PK.filter(x=>x.d>=td).sort((a,b)=>a.d===b.d?(a.t||"00").localeCompare(b.t||"00"):a.d<b.d?-1:1)}
 function pkHTML(){
   const L=pkList();if(!L.length)return "";
   const T=new Date(),t0=new Date(T.getFullYear(),T.getMonth(),T.getDate());
-  return `<div class="hk-h">Kommer</div><ul class="pk">${L.map(x=>{const d=new Date(x.d+"T12:00"),k=Math.round((d-t0)/864e5),w=k===0?"I dag":k===1?"I morgen":WDN[d.getDay()]+" "+d.getDate()+". "+MN[d.getMonth()];return `<li><span class="w">${w}${x.t?`<small>${x.t}</small>`:""}</span><span class="t">${esc(x.x)}</span></li>`}).join("")}</ul>`+(HK.length?`<div class="hk-h">Mine</div>`:"");
+  return `<div class="hk-h">Kommende</div><ul class="pk">${L.map(x=>{const d=new Date(x.d+"T12:00"),k=Math.round((d-t0)/864e5),w=k===0?"I dag":k===1?"I morgen":WDN[d.getDay()]+" "+d.getDate()+". "+MN[d.getMonth()];return `<li><span class="w">${w}${x.t?`<small>${x.t}</small>`:""}</span><span class="t">${esc(x.x)}</span></li>`}).join("")}</ul>`+(HK.length?`<div class="hk-h">Mine</div>`:"");
 }
 function hkHTML(){
   return pkHTML()+`<ul class="hk">${HK.map((x,i)=>`<li><label><input type="checkbox" data-hk="${i}"${x.d?" checked":""}><span${x.d?' class="dn"':""}>${esc(x.t)}</span></label><button type="button" class="x" data-hd="${i}" aria-label="Fjern">×</button></li>`).join("")}</ul><form class="hf" id="hkf"><input id="hki" type="text" placeholder="Ny huskelapp …" autocomplete="off" enterkeyhint="done"><button type="submit">Legg til</button></form>`;
